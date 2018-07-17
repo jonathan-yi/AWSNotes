@@ -1,7 +1,7 @@
-What is IAM?
+### What is IAM?
   - Allows you to manage users and level of access to the AWS Console
 
-What Does IAM give you?
+### What Does IAM give you?
   - Centralized control of AWS account
   - Shared access to AWS account
   - Granular Permissions
@@ -12,11 +12,11 @@ What Does IAM give you?
   - Intergrates with many different AWS services
   - Support PCI DSS Compliance
 
-Critical Terms:
-  - Users - End Users (people)
-  - Groups - collection of users under one sef of permissions
-  - Roles - you create roles and can assign them to AWS resources
-  - Policies - document that defines one (or more permissions) that you attach to users or to groups (Made of JSON)
+### Critical Terms:
+- Users - End Users (people)
+- Groups - collection of users under one sef of permissions
+- Roles - you create roles and can assign them to AWS resources
+- Policies - document that defines one (or more permissions) that you attach to users or to groups (Made of JSON)
 
 - Users, Groups, Roles will all be globally available and are not tied to a specific region.
 - AWS recommends to create users then group into groups and assign permissions for groups

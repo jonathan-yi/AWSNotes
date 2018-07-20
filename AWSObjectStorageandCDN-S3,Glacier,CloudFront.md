@@ -133,3 +133,93 @@ Optimized to work with other AWS's (S3, EC2, Elastic Load Balancing, Route 53). 
 - Edge locations are not just READ only, you can write to them too.
 - Objects are cached for the life of the TTL (Time to Live) set by you
 - You can clear cached objects, but you will be charged
+
+# AWS Storage Gateway
+Is a service that connects on-premises software appliance with cloud-based storage to provide seamless and secure integration between an organization's on-premises IT environment and AWS's storage infrastructure.
+The service enables you to securely store data to the AWS cloud for scalable and cost-effective storage
+
+### Four Types of Storage Gateways
+- File Gateway (NFS) - store flat files (Word files, pdf, picture, videos, etc.) in S3. 
+- Volumes Gateway (iSCSI) - Block storage. You would probably run operating systems on. Virtual harddisk you run VM on.
+  - Stored Volumes - where you store entire copy of dataset on-premise
+  - Cached Volumes - where you only store the most recently accessed data on-premise. Rest of data is backed up in Amazon
+- Tape Gateway (VTL) - backup/archiving solution. Allows you to create virtual tapes and send to S3. Can use lifecycle policies to send them off to Glacier
+
+### File Gateway
+- Files stored as objects in your S3 buckets
+- Accessed through Network File System mount point
+- Ownership, permissions, and timestaps are durably stored in S3 in the user-metadata of the object associated with the file
+- Can be managed as native S3 objects once transferred
+- Bucket policies such as versioning, lifecycle management, and cross-region replication apply directly to objects stored in your bucket
+
+### Volume Gateway
+- presents applications with disk volumes using the iSCSI block protocol
+- data written to these volumes can be asynchronously backed up as point-in-time snapshots of your volumes, and stored in the cloud as Amazon EBS(ELastic block store) snapshots.
+- Snapshots are incremental backups that capture only changed blocks. All snapshot storage is compressed to minimize your storage charges
+- Virtual hard disk on premise backed up on AMS
+
+### Volume Gateway - Stored Volumes
+- Store primary data locally, while asynchronously backing up that data to AWS
+- Provide on-premises applications with low-latency access to their entire datasets, while providing durable, off-site backups.
+- Can create storage volumes and mount them as iSCSI devices from your on-premises application servers
+- Data written to your stored volumes in stored on your on-premises storage hardware
+- Data is asynchronously backed up to S3 in the form of Amazon Elastic Block Store(EBS) snapshots
+- 1 GB - 16 TB in size for Stored Volumes
+
+### Volume Gateway - Cached Volumes
+- Lets you use S3 as your primary data storage while retaining frequently accessed data locally in your storage gateway.
+- Minimize the need to scale your on-premises storage infrastructure, while still providing your applications with low-latency access to their frequently accessed data
+- Can create storage volumes up to 32 TiB in size and attach to them as iSCSI devices from your on-premises application servers
+- Your gateway stores data that you write to these volumes in S3 and retains recently read data in your on-premises storage gateway's cache and upload butter storage
+- 1GB - 32 TB in size for Cached Volumes.
+
+### Volume Gateway - Tape Gateway
+- Durable, cost-effective solution to archive your data in AWS Cloud.
+- VTL interface lets you leverage your existing tape-based backup application infrastructure to store data on virtual tape cartridges that you create on your tape gateway
+- Preconfigured with a media changer and tape drives, which are available to your existing client backup applications as iSCSI devices
+- You add tape cartriges as you need to archive your data
+- Supported by NetBackup, Backup Exec, Veeam, etc.
+
+### Exam Tips
+- File Gateway - for flat files, stored directly on S3. And for storage cost to a minimum
+- Volume Gateway:
+  - Stored Volumes - entire dataset is stored on site and is asynchronously backed up to S3
+  - Cached Volumes - Entire Dataset is stored on S3 and the most frequently accessed data is cached on site
+- Gateway Virtual Tape Library (VTL)
+  - Used for backup and uses popular backup applications like NetBackup, Backup Exec, Veeam, etc.
+
+# Snowball
+Used to move large amounts of data into and out of AWS cloud using physical storage device for transport
+
+### Types of Snowballs
+- Snowball
+- Snowball Edge
+- Snowmobile
+
+### Snowball
+- petabyte-scale data transport solution that uses secure appliances to transfer large amounts of data into and out of AWS.
+- Addresses common challenges with large-scale data transfers including high network costs, long transfer times, and security concerns
+- Simple, fast, secure, little as 1/5 the cost of high-speed internet
+- 80TB snowball in all regions
+- Multiple layers of security to protect your data including tamper-resistnant enclosures, 256-bit encryption, and industry-standard Trusted Plateform Module (TPM) designed to ensure security and full chain-of custody of your data. 
+- Once data transfer is processed and verified, AWS performs a software erasure of Snowball appliance
+
+### Snowball Edge
+- 100TB data transfer device with on-board storage and compute capabilities. Allow you to run lambda functions
+- move large amounts of data into and out of AWS, as temporary storage tier for large local datasets, or to support local workloads in remote or offline locations
+- Connects using standard storage interfaces, streamlining the data transfer process and minimizing setup and integration
+- Can cluster together to form local storage tier and process your data on-premises, ensure application continue to run even when they are not able to access cloud
+
+### Snowmobile
+- Is exabyte-scale data transfer service used to move extremely large amounts of data to AWS.
+- Can transfer up to 100PB per Snowmobile
+- a 45-foot long ruggedizzed shipping contianer, pulled by a semi-trailer truck
+- Makes it easy to move massive volumes of data to cloud (vido libraries, image repositories, complete data center migration)
+- Secure, fast, and cost effective for transferring data
+
+### Exam Tips
+- Understand what Snowball is
+- Understand what Import Export is. When you used to send your own disk of data to AWS
+- Snowball can
+  - Import to S3
+  - Export from S3
